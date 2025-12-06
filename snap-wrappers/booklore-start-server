@@ -1,0 +1,2 @@
+#!/bin/bash
+${SNAP}/usr/lib/jvm/java-21-openjdk-amd64/bin/java -jar -Dserver.port=41934 $SNAP/bin/build/booklore-api/build/libs/booklore-api-0.0.1-SNAPSHOT.jar

@@ -1,0 +1,127 @@
+name: newtest
+base: core24
+version: '1.13.1'
+summary: Single-line elevator pitch for your amazing snap
+description: |
+  This is my-snap's description. You have a paragraph or two to tell the
+  most important story about your snap. Keep it under 100 words though,
+  we live in tweetspace and your description wants to look good in the snap
+  store.
+
+grade: devel
+confinement: devmode
+
+layout:
+  /var/lib/mysql-files:
+    bind: $SNAP_COMMON/var/lib/mysql-files
+
+parts:
+  booklore-api:
+    plugin: nil
+    source: https://github.com/booklore-app/booklore.git
+    source-type: git
+    source-depth: 1
+    build-packages:
+      - openjdk-21-jdk-headless
+      - ca-certificates
+      - ca-certificates-java
+    stage-packages:
+      - openjdk-21-jre-headless
+      - ca-certificates
+      - ca-certificates-java
+    override-build: |
+      echo "BEGIN BUILD OF Booklore - gradlew"
+      export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
+      cd booklore-api
+      ./gradlew --no-daemon bootJar
+      echo "COMPLETED BUILD OF Booklore - gradlew"
+    override-stage: |
+      printenv
+      mkdir -p "${CRAFT_PRIME}"/bin
+      cp -a ${CRAFT_PART_BUILD} ${SNAPCRAFT_PRIME}/bin/
+      craftctl default
+  
+  # Server wrapper scripts
+  server-wrappers:
+    plugin: dump
+    source: ./snap-wrappers
+    stage-packages:
+      - mariadb-server
+    organize:
+      mariadb-start-server: bin/mariadb-start-server
+      booklore-start-server: bin/booklore-start-server
+      nginx-start-server: bin/nginx-start-server
+      
+  # Booklore UI
+  booklore-ui:
+    plugin: nil
+    source: https://github.com/booklore-app/booklore.git
+    source-type: git
+    source-depth: 1
+    override-build: |
+      echo "BEGIN BUILD OF Booklore - UI"
+      cd booklore-ui
+      
+      # Download and install nvm:
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+      # in lieu of restarting the shell
+      \. "$HOME/.nvm/nvm.sh"
+      # Download and install Node.js:
+      nvm install 24
+
+      npm config set registry http://registry.npmjs.org
+      npm install --force
+      npm run build --configuration=production
+      echo "COMPLETED BUILD OF Booklore - UI"
+    override-stage: |
+      printenv
+      mkdir -p "${CRAFT_PRIME}"/booklore-ui/dist/booklore
+      cp -a ${CRAFT_PART_BUILD} ${SNAPCRAFT_PRIME}/bin/
+      craftctl default
+  
+  nginx:
+    plugin: nil
+    stage-packages:
+      - nginx
+      - nginx-common
+    
+
+
+apps:
+  booklore:
+    command: bin/booklore-start-server
+    daemon: simple
+    after:
+      - mariadb-server
+    restart-condition: always
+    plugs:
+      - network
+      - network-bind
+      - system-observe
+      - removable-media
+    environment:
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-21-openjdk-amd64/
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
+      JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
+      DATABASE_URL: jdbc:mariadb://localhost:3306/booklore
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: XH4VmT3_jz
+
+  # MariaDB daemon
+  mariadb-server:
+    command: bin/mariadb-start-server
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+    
+  # Nginx daemon
+  nginx-server:
+    command: bin/nginx-start-server
+    daemon: simple
+    after:
+      - mariadb-server
+      - booklore
+    restart-condition: always
+    plugs: [network, network-bind]
