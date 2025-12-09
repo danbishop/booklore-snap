@@ -11,9 +11,9 @@ description: |
 grade: devel
 confinement: devmode
 
-layout:
-  /var/lib/mysql-files:
-    bind: $SNAP_COMMON/var/lib/mysql-files
+# layout:
+#   /var/lib/mysql-files:
+#     bind: $SNAP_COMMON/var/lib/mysql-files
 
 parts:
   booklore-api:
@@ -84,6 +84,9 @@ parts:
     stage-packages:
       - nginx
       - nginx-common
+    override-stage: |
+      cp  ${SNAPCRAFT_PRIME}/bin/
+      craftctl default
     
 
 
