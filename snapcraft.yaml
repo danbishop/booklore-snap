@@ -1,4 +1,4 @@
-name: BookLore
+name: booklore
 base: core24
 version: '1.14.1'
 summary: Single-line elevator pitch for your amazing snap
