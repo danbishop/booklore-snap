@@ -70,4 +70,4 @@ BASEDIR="${SNAP}/usr"
 [ -d "${DATADIR}" ] || init_database
 
 echo "Starting mariadb server..."
-mysqld --defaults-file=${CONFFILE} --user=root $@
+exec mysqld --defaults-file=${CONFFILE} --user=root $@

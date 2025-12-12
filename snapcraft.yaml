@@ -94,7 +94,14 @@ parts:
 
 
 apps:
-  booklore:
+  # MariaDB daemon
+  mariadb-server:
+    command: bin/mariadb-start-server
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  booklore-api:
     command: bin/booklore-start-server
     daemon: simple
     after:
@@ -114,13 +121,6 @@ apps:
       DATABASE_URL: jdbc:mariadb://localhost:41933/booklore
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: ""
-
-  # MariaDB daemon
-  mariadb-server:
-    command: bin/mariadb-start-server
-    daemon: simple
-    restart-condition: always
-    plugs: [network, network-bind]
     
   # Nginx daemon
   nginx-server:
@@ -128,6 +128,6 @@ apps:
     daemon: simple
     after:
       - mariadb-server
-      - booklore
+      - booklore-api
     restart-condition: always
     plugs: [network, network-bind]
