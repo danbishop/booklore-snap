@@ -111,9 +111,9 @@ apps:
       JAVA_HOME: $SNAP/usr/lib/jvm/java-21-openjdk-amd64/
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
       JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
-      DATABASE_URL: jdbc:mariadb://localhost:3306/booklore
+      DATABASE_URL: jdbc:mariadb://localhost:41933/booklore
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD: XH4VmT3_jz
+      DATABASE_PASSWORD: ""
 
   # MariaDB daemon
   mariadb-server:
