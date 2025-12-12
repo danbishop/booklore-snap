@@ -9,8 +9,8 @@ description: |
   support, and a sleek, modern UI, BookLore makes it easy to build and explore
   your personal library.
 
-grade: devel
-confinement: devmode
+grade: stable
+confinement: strict
 
 layout:
   /var/lib/nginx:
