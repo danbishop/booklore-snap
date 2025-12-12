@@ -1,2 +1,2 @@
 #!/bin/bash
-${SNAP}/usr/sbin/nginx --http-client-body-temp-path=${SNAP}/tmp/body
+${SNAP}/usr/sbin/nginx -c "${SNAP}/etc/nginx-booklore/nginx.conf"

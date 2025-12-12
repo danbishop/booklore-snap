@@ -1,19 +1,22 @@
-name: newtest
+name: BookLore
 base: core24
-version: '1.13.1'
+version: '1.14.1'
 summary: Single-line elevator pitch for your amazing snap
 description: |
-  This is my-snap's description. You have a paragraph or two to tell the
-  most important story about your snap. Keep it under 100 words though,
-  we live in tweetspace and your description wants to look good in the snap
-  store.
+  BookLore is a self-hosted web app for organising and managing your personal book
+  collection. It provides an intuitive interface to browse, read, and track your
+  progress across PDFs and eBooks. With robust metadata management, multi-user
+  support, and a sleek, modern UI, BookLore makes it easy to build and explore
+  your personal library.
 
 grade: devel
 confinement: devmode
 
-# layout:
-#   /var/lib/mysql-files:
-#     bind: $SNAP_COMMON/var/lib/mysql-files
+layout:
+  /var/lib/nginx:
+    bind: $SNAP_DATA/var/lib/nginx
+  /var/log/nginx:
+    bind: $SNAP_DATA/var/log/nginx
 
 parts:
   booklore-api:
@@ -80,13 +83,13 @@ parts:
       craftctl default
   
   nginx:
-    plugin: nil
+    plugin: dump
+    source: ./nginx
     stage-packages:
       - nginx
       - nginx-common
-    override-stage: |
-      cp  ${SNAPCRAFT_PRIME}/bin/
-      craftctl default
+    organize:
+      nginx.conf: etc/nginx-booklore/nginx.conf
     
 
 
