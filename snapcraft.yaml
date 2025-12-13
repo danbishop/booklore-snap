@@ -1,4 +1,11 @@
 name: booklore
+title: BookLore
+license: GPL-3.0
+website: https://github.com/booklore-app/booklore
+donation: https://opencollective.com/booklore
+source-code: https://github.com/booklore-app/booklore.git
+issues: https://github.com/danbishop/booklore-snap/issues
+contact: d@nbishop.uk
 base: core24
 version: '1.14.1'
 summary: Single-line elevator pitch for your amazing snap
@@ -90,8 +97,6 @@ parts:
       - nginx-common
     organize:
       nginx.conf: etc/nginx-booklore/nginx.conf
-    
-
 
 apps:
   # MariaDB daemon
@@ -110,15 +115,16 @@ apps:
     plugs:
       - network
       - network-bind
-      - system-observe
+      # - system-observe
       - removable-media
+      - mount-observe
     environment:
       LC_ALL: C.UTF-8
       LANG: C.UTF-8
       JAVA_HOME: $SNAP/usr/lib/jvm/java-21-openjdk-amd64/
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
       JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
-      DATABASE_URL: jdbc:mariadb://localhost:41933/booklore
+      DATABASE_URL: jdbc:mariadb://localhost:41933/booklore?createDatabaseIfNotExist=true
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: ""
     
@@ -131,3 +137,7 @@ apps:
       - booklore-api
     restart-condition: always
     plugs: [network, network-bind]
+
+lint:
+  ignore:
+    - library
