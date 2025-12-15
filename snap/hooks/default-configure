@@ -11,4 +11,4 @@ free_port() {
 }
 
 snapctl set database-password="$(random_string)"
-snapctl set mariadb-port="$(free_port)"
+snapctl set database-port="$(free_port)"

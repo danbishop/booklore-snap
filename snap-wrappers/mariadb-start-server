@@ -27,7 +27,7 @@ datadir=${DATADIR}
 log-error=${LOGDIR}/error.log
 secure-file-priv=${FILESDIR}
 basedir=${BASEDIR}
-port=41933
+port=${DATABASE_PORT}
 
 [mysql]
 socket=${RUNDIR}/mysqld.sock
@@ -58,6 +58,7 @@ CONFDIR="${MYSQL_SNAPDIR}/etc/mysql"
 CONFFILE="${CONFDIR}/my.cnf"
 FILESDIR="${MYSQL_SNAPDIR}/var/lib/mysql-files"
 BASEDIR="${SNAP}/usr"
+DATABASE_PORT="$(snapctl get database-port)"
 
 [ -d "${LOGDIR}" ] || mkdir -p ${LOGDIR}
 [ -f "${LOGDIR}/error.log" ] || touch ${LOGDIR}/error.log
