@@ -40,7 +40,7 @@ EOF
 init_database() {
   echo "Initialising new database in ${DATADIR}..."
   mkdir -p ${DATADIR}
-  mariadb-install-db --basedir="${SNAP}/usr" --defaults-file=${CONFFILE} --user=root --auth-root-authentication-method=normal
+  mariadb-install-db --basedir="${SNAP}/usr" --defaults-file=${CONFFILE} --user=root --auth-root-authentication-method=socket --skip-test-db
   echo "Done"
 }
 

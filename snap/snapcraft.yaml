@@ -15,6 +15,10 @@ description: |
   progress across PDFs and eBooks. With robust metadata management, multi-user
   support, and a sleek, modern UI, BookLore makes it easy to build and explore
   your personal library.
+  
+  **This is an unofficial snap.** After installing, and waiting for the the various services to start, your instance will be accessible at http://localhost:41935
+
+  The port is not currently configurable and it's required to keep 41393 and 41394 free for the API and the DB respectively for the time being.
 
 grade: stable
 confinement: strict
@@ -124,9 +128,6 @@ apps:
       JAVA_HOME: $SNAP/usr/lib/jvm/java-21-openjdk-amd64/
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
       JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
-      DATABASE_URL: jdbc:mariadb://localhost:41933/booklore?createDatabaseIfNotExist=true
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: ""
     
   # Nginx daemon
   nginx-server:
