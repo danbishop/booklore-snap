@@ -3,5 +3,6 @@ export DATABASE_PORT="$(snapctl get database-port)"
 export DATABASE_URL="jdbc:mariadb://localhost:${DATABASE_PORT}/booklore?createDatabaseIfNotExist=true"
 export DATABASE_USERNAME="booklore"
 export DATABASE_PASSWORD="$(snapctl get database-password)"
+export API_PORT="$(snapctl get api-port)"
 mariadb --socket=/var/snap/booklore/common/run/mysql/mysqld.sock --skip-ssl -u root -e "CREATE OR REPLACE USER 'booklore'@'localhost' IDENTIFIED BY '$DATABASE_PASSWORD';GRANT ALL PRIVILEGES ON *.* TO 'booklore'@'localhost';FLUSH PRIVILEGES;"
-${SNAP}/usr/lib/jvm/java-21-openjdk-amd64/bin/java -jar -Dserver.port=41934 -Dapp.path-config="${SNAP_COMMON}/app" -Dapp.bookdrop-folder="${SNAP_COMMON}/bookdrop" ${SNAP}/bin/build/booklore-api/build/libs/booklore-api-0.0.1-SNAPSHOT.jar
+${SNAP}/usr/lib/jvm/java-21-openjdk-amd64/bin/java -jar -Dserver.port=$API_PORT -Dapp.path-config="${SNAP_COMMON}/app" -Dapp.bookdrop-folder="${SNAP_COMMON}/bookdrop" ${SNAP}/bin/build/booklore-api/build/libs/booklore-api-0.0.1-SNAPSHOT.jar

@@ -1,2 +1,6 @@
 #!/bin/bash
-${SNAP}/usr/sbin/nginx -c "${SNAP}/etc/nginx-booklore/nginx.conf"
+export PORT="$(snapctl get port)"
+export API_PORT="$(snapctl get api-port)"
+mkdir -p ${SNAP_COMMON}/etc/nginx/
+cat "${SNAP}/etc/nginx/nginx.conf.template" | envsubst '$PORT,$API_PORT' > "${SNAP_COMMON}/etc/nginx/nginx.conf"
+${SNAP}/usr/sbin/nginx -c "${SNAP_COMMON}/etc/nginx/nginx.conf"

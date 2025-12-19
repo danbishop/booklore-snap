@@ -4,11 +4,7 @@ random_string() {
   head -c 64 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9'
 }
 
-free_port() {
-  for port in $(seq 41936 45000); do
-    (echo > /dev/tcp/0.0.0.0/$port) >/dev/null 2>&1 || { echo "$port"; break; }
-  done
-}
-
+napctl set port="41935"
 snapctl set database-password="$(random_string)"
-snapctl set database-port="$(free_port)"
+snapctl set database-port="41936"
+snapctl set api-port="41937"

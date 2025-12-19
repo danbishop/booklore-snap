@@ -99,8 +99,9 @@ parts:
     stage-packages:
       - nginx
       - nginx-common
+      - gettext
     organize:
-      nginx.conf: etc/nginx-booklore/nginx.conf
+      nginx.conf.template: etc/nginx/nginx.conf.template
 
 apps:
   # MariaDB daemon
@@ -130,7 +131,7 @@ apps:
       JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
     
   # Nginx daemon
-  nginx-server:
+  nginx:
     command: bin/nginx-start-server
     daemon: simple
     after:

@@ -1,21 +1,2 @@
 #!/bin/sh -e
 
-random_string() {
-  head -c 64 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9'
-}
-
-free_port() {
-  for port in $(seq 41936 45000); do
-    (echo > /dev/tcp/0.0.0.0/$port) >/dev/null 2>&1 || { echo "$port"; break; }
-  done
-}
-
-database_password="$(snapctl get database-password)"
-if [ -z "$database_password" ]; then
-  snapctl set database-password="$(random_string)"
-fi
-
-database_port="$(snapctl get database-password)"
-if [ -z "$database_port" ]; then
-  snapctl set mariadb-port="$(free_port)"
-fi
