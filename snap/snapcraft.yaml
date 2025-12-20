@@ -33,11 +33,14 @@ description: |
   which should be in _/mnt/somewhere_ or _/media/somewhere_ so that the snap can access them:
 
   `sudo snap connect booklore:removable-media`
+
   `sudo snap connect booklore:mount-observe`
 
   There are three services, nginx (the web server), booklore-api (the backend API server),
   and mariadb (the database server). The database files and logs are stored in the snap's
   data directory, which is preserved across snap updates.
+
+  **Ports**
 
   You can change the port that each service uses with the following commands:
 
@@ -57,7 +60,9 @@ description: |
   
   `sudo snap restart booklore`
 
-  If you need to connect to the MariaDB database from outside the snap, the username is `booklore`
+  **Database**
+
+  If you need to connect to the MariaDB database from outside the snap, the username is _booklore_
   and you can use the following command to get the password:
   
   `snap get booklore database-password`
