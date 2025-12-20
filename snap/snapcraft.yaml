@@ -57,6 +57,7 @@ parts:
       echo "BEGIN BUILD OF Booklore - gradlew"
       export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
       cd booklore-api
+      echo "${http_proxy}"
       ./gradlew -Djava.net.useSystemProxies=true --no-daemon bootJar
       echo "COMPLETED BUILD OF Booklore - gradlew"
     override-stage: |
@@ -82,6 +83,8 @@ parts:
     source: https://github.com/booklore-app/booklore.git
     source-type: git
     source-depth: 1
+    stage-packages:
+      - curl
     override-build: |
       echo "BEGIN BUILD OF Booklore - UI"
       cd booklore-ui
