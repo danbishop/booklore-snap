@@ -14,9 +14,9 @@ platforms:
   arm64:
     build-on: [arm64]
     build-for: [arm64]
-  armhf:
-    build-on: [armhf]
-    build-for: [armhf]
+  riscv64:
+    build-on: [riscv64]
+    build-for: [riscv64]
 adopt-info: booklore-api
 summary: Single-line elevator pitch for your amazing snap
 description: |
