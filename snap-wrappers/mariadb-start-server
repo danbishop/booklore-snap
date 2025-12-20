@@ -67,7 +67,7 @@ DATABASE_PORT="$(snapctl get database-port)"
     chmod 0700 ${FILESDIR}
 }
 [ -d "${RUNDIR}" ] || mkdir -p ${RUNDIR}
-[ -d "${CONFDIR}" ] || init_config
+init_config
 [ -d "${DATADIR}" ] || init_database
 
 echo "Starting mariadb server..."
