@@ -58,12 +58,10 @@ parts:
       export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
       cd booklore-api
       echo "Extracting potential https_proxy and/or http_proxy as needed when building with Canonical buildfarm"
-      if [ -z ${https_proxy_host} ]; then
       https_proxy_host=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f1)
       https_proxy_port=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f2)
-      GRADLE_OPTS="-Dhttp.proxyHost=$https_proxy_host -Dhttp.proxyPort=$https_proxy_port -Dhttps.proxyHost=$https_proxy_host -Dhttps.proxyPort=$https_proxy_port"
-      fi
-      ./gradlew --no-daemon bootJar
+      gradle_opts="-Dhttp.proxyHost=$https_proxy_host -Dhttp.proxyPort=$https_proxy_port -Dhttps.proxyHost=$https_proxy_host -Dhttps.proxyPort=$https_proxy_port"
+      ./gradlew --no-daemon $gradle_opts bootJar
       echo "COMPLETED BUILD OF Booklore - gradlew"
     override-stage: |
       printenv
