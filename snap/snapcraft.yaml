@@ -32,10 +32,8 @@ description: |
   You'll probably want to connect the snap as follows to allow access your books
   which should be in _/mnt/somewhere_ or _/media/somewhere_ so that the snap can access them:
 
-  `
-  sudo snap connect booklore:removable-media
-  sudo snap connect booklore:mount-observe
-  `
+  `sudo snap connect booklore:removable-media`
+  `sudo snap connect booklore:mount-observe`
 
   There are three services, nginx (the web server), booklore-api (the backend API server),
   and mariadb (the database server). The database files and logs are stored in the snap's
@@ -49,9 +47,7 @@ description: |
   
   For the port that MariaDB listens on (default 41936):
   
-  `
-  sudo snap set booklore database-port=<desired-port>
-  `
+  `sudo snap set booklore database-port=<desired-port>`
   
   For the port that booklore-api listens on (default 41937):
   
@@ -64,7 +60,7 @@ description: |
   If you need to connect to the MariaDB database from outside the snap, the username is `booklore`
   and you can use the following command to get the password:
   
-  `snap get booklore database-password
+  `snap get booklore database-password`
 
   You can also connect with the following command as root:
   
