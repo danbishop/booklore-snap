@@ -57,8 +57,8 @@ parts:
       echo "BEGIN BUILD OF Booklore - gradlew"
       export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
       cd booklore-api
-      echo "${http_proxy}"
-      ./gradlew -Djava.net.useSystemProxies=true --no-daemon bootJar
+      gradle_opts="-Dhttp.proxyHost=$https_proxy_host -Dhttp.proxyPort=$https_proxy_port -Dhttps.proxyHost=$https_proxy_host -Dhttps.proxyPort=$https_proxy_port"
+      ./gradlew --no-daemon $gradle_opts bootJar
       echo "COMPLETED BUILD OF Booklore - gradlew"
     override-stage: |
       printenv
