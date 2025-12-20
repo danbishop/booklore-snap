@@ -10,13 +10,10 @@ base: core24
 platforms:
   amd64:
     build-on: [amd64]
-    build-for: [amd64]
+    build-for: [amd64, riscv64]
   arm64:
     build-on: [arm64]
     build-for: [arm64]
-  riscv64:
-    build-on: [amd64]
-    build-for: [riscv64]
 adopt-info: booklore-api
 summary: A self-hosted web app for organising your personal book collection
 description: |
@@ -56,6 +53,11 @@ description: |
   ```bash
   snap get booklore database-password
   ``` 
+
+  You can also connect with the following command as root:
+  ```bash
+  sudo mariadb --socket=/var/snap/booklore/common/run/mysql/mysqld.sock -u root --skip-ssl
+  ```
 
 grade: stable
 confinement: strict
