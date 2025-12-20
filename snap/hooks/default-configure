@@ -4,7 +4,7 @@ random_string() {
   head -c 64 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9'
 }
 
-napctl set port="41935"
+snapctl set port="41935"
 snapctl set database-password="$(random_string)"
 snapctl set database-port="41936"
 snapctl set api-port="41937"

@@ -7,7 +7,8 @@ source-code: https://github.com/booklore-app/booklore.git
 issues: https://github.com/danbishop/booklore-snap/issues
 contact: d@nbishop.uk
 base: core24
-version: '1.14.1'
+# version: '1.14.1'
+adopt-info: booklore-api
 summary: Single-line elevator pitch for your amazing snap
 description: |
   BookLore is a self-hosted web app for organising and managing your personal book
@@ -34,7 +35,6 @@ parts:
     plugin: nil
     source: https://github.com/booklore-app/booklore.git
     source-type: git
-    source-depth: 1
     build-packages:
       - openjdk-21-jdk-headless
       - ca-certificates
@@ -44,6 +44,7 @@ parts:
       - ca-certificates
       - ca-certificates-java
     override-build: |
+      craftctl set version=$(git describe --tags $(git rev-list --tags --max-count=1))
       echo "BEGIN BUILD OF Booklore - gradlew"
       export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
       cd booklore-api
@@ -52,7 +53,7 @@ parts:
     override-stage: |
       printenv
       mkdir -p "${CRAFT_PRIME}"/bin
-      cp -a ${CRAFT_PART_BUILD} ${SNAPCRAFT_PRIME}/bin/
+      cp -a ${CRAFT_PART_BUILD}/booklore-api/build ${SNAPCRAFT_PRIME}/bin/booklore-api
       craftctl default
   
   # Server wrapper scripts
@@ -89,8 +90,8 @@ parts:
       echo "COMPLETED BUILD OF Booklore - UI"
     override-stage: |
       printenv
-      mkdir -p "${CRAFT_PRIME}"/booklore-ui/dist/booklore
-      cp -a ${CRAFT_PART_BUILD} ${SNAPCRAFT_PRIME}/bin/
+      mkdir -p "${CRAFT_PRIME}"/booklore-ui
+      cp -a ${CRAFT_PART_BUILD}/booklore-ui/dist/booklore/browser/ "${CRAFT_PRIME}"/booklore-ui
       craftctl default
   
   nginx:
