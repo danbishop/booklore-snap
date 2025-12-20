@@ -30,12 +30,12 @@ description: |
   services to start, your instance will be accessible at http://localhost:41935
 
   You'll probably want to connect the snap as follows to allow access your books
-  which should be in `/mnt/somewhere` or `/media/somewhere` so that the snap can access them:
+  which should be in _/mnt/somewhere_ or _/media/somewhere_ so that the snap can access them:
 
-  ```bash
+  `
   sudo snap connect booklore:removable-media
   sudo snap connect booklore:mount-observe
-  ```
+  `
 
   There are three services, nginx (the web server), booklore-api (the backend API server),
   and mariadb (the database server). The database files and logs are stored in the snap's
@@ -45,40 +45,30 @@ description: |
 
   For the port that nginx listens on (default 41935):
   
-  ```bash
-  sudo snap set booklore port=<desired-port>
-  ```
+  `sudo snap set booklore port=<desired-port>`
   
   For the port that MariaDB listens on (default 41936):
   
-  ```bash
+  `
   sudo snap set booklore database-port=<desired-port>
-  ```
+  `
   
   For the port that booklore-api listens on (default 41937):
   
-  ```bash
-  sudo snap set booklore api-port=<desired-port>
-  ```
+  `sudo snap set booklore api-port=<desired-port>`
   
   After changing the ports, you will need to restart the snap for the changes to take effect:
   
-  ```bash
-  sudo snap restart booklore
-  ```
+  `sudo snap restart booklore`
 
   If you need to connect to the MariaDB database from outside the snap, the username is `booklore`
   and you can use the following command to get the password:
   
-  ```bash
-  snap get booklore database-password
-  ```
+  `snap get booklore database-password
 
   You can also connect with the following command as root:
   
-  ```bash
-  sudo mariadb --socket=/var/snap/booklore/common/run/mysql/mysqld.sock -u root --skip-ssl
-  ```
+  `sudo mariadb --socket=/var/snap/booklore/common/run/mysql/mysqld.sock -u root --skip-ssl`
 
 grade: stable
 confinement: strict
