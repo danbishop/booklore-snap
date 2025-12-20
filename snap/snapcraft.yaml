@@ -61,6 +61,8 @@ parts:
         https_proxy_host=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f1);
         https_proxy_port=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f2);
         gradle_opts="-Dhttp.proxyHost=$https_proxy_host -Dhttp.proxyPort=$https_proxy_port -Dhttps.proxyHost=$https_proxy_host -Dhttps.proxyPort=$https_proxy_port";
+      else
+        gradle_opts="";
       fi
       ./gradlew --no-daemon $gradle_opts bootJar
       echo "COMPLETED BUILD OF Booklore - gradlew"
@@ -87,15 +89,14 @@ parts:
     source: https://github.com/booklore-app/booklore.git
     source-type: git
     source-depth: 1
-    stage-packages:
-      - curl
-      - libcurl4t64
+    build-packages:
+      - wget
     override-build: |
       echo "BEGIN BUILD OF Booklore - UI"
       cd booklore-ui
       
       # Download and install nvm:
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+      wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
       # in lieu of restarting the shell
       \. "$HOME/.nvm/nvm.sh"
       # Download and install Node.js:
