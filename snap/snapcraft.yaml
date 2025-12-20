@@ -7,7 +7,16 @@ source-code: https://github.com/booklore-app/booklore.git
 issues: https://github.com/danbishop/booklore-snap/issues
 contact: d@nbishop.uk
 base: core24
-# version: '1.14.1'
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
+  armhf:
+    build-on: [armhf]
+    build-for: [armhf]
 adopt-info: booklore-api
 summary: Single-line elevator pitch for your amazing snap
 description: |
