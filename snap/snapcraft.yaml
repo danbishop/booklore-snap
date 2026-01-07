@@ -14,9 +14,9 @@ platforms:
   arm64:
     build-on: [arm64]
     build-for: [arm64]
-  riscv64:
-    build-on: [riscv64]
-    build-for: [riscv64]
+  # riscv64:
+  #   build-on: [riscv64]
+  #   build-for: [riscv64]
 adopt-info: booklore-api
 summary: A self-hosted web app for organising your personal book collection
 description: |
