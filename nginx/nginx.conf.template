@@ -45,14 +45,14 @@ http {
 
         # Proxy API requests that start with /api/ to the backend
         location /api/ {
-            proxy_pass http://localhost:$API_PORT;
+            proxy_pass http://127.0.0.1:$API_PORT;
 			proxy_set_header X-Forwarded-Port $server_port;
 			proxy_set_header X-Forwarded-Host $host;
         }
 
         # Proxy WebSocket requests (ws://) to the backend
         location /ws {
-            proxy_pass http://localhost:$API_PORT/ws;  # Backend WebSocket endpoint
+            proxy_pass http://127.0.0.1:$API_PORT/ws;  # Backend WebSocket endpoint
             proxy_http_version 1.1;  # Ensure HTTP 1.1 is used for WebSocket connection
             proxy_set_header Upgrade $http_upgrade;  # Pass the upgrade header
             proxy_set_header Connection 'upgrade';  # Pass the connection header
