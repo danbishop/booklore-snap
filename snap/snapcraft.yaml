@@ -86,17 +86,17 @@ parts:
     source: https://github.com/booklore-app/booklore.git
     source-type: git
     build-packages:
-      - openjdk-21-jdk-headless
+      - openjdk-25-jdk-headless
       - ca-certificates
       - ca-certificates-java
     stage-packages:
-      - openjdk-21-jre-headless
+      - openjdk-25-jre-headless
       - ca-certificates
       - ca-certificates-java
     override-build: |
       craftctl set version=$(git describe --tags $(git rev-list --tags --max-count=1))
       echo "BEGIN BUILD OF Booklore - gradlew"
-      export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-21-openjdk-${SNAP_ARCH}"
+      export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-25-openjdk-${SNAP_ARCH}"
       cd booklore-api
       if [ ! -z ${https_proxy+x} ]; then
         https_proxy_host=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f1);
@@ -186,7 +186,7 @@ apps:
     environment:
       LC_ALL: C.UTF-8
       LANG: C.UTF-8
-      JAVA_HOME: $SNAP/usr/lib/jvm/java-21-openjdk-amd64/
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-25-openjdk-amd64/
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib
       JAVA_OPTS: -Djna.library.path=$SNAP/usr/lib/x86_64-linux-gnu/jni/libjnidispatch.system.so -Djna.tmpdir=/tmp
     
