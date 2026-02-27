@@ -101,8 +101,6 @@ parts:
       echo "BEGIN BUILD OF Booklore - gradlew"
       export JAVA_HOME="${SNAPCRAFT_PART_INSTALL}/usr/lib/jvm/java-25-openjdk-${SNAP_ARCH}"
       cd booklore-api
-      echo "Working dir:"
-      echo $PWD
       if [ ! -z ${https_proxy+x} ]; then
         https_proxy_host=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f1);
         https_proxy_port=$(echo $https_proxy | cut -d'/' -f3 | cut -d':' -f2);
